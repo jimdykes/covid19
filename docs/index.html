@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+  <!-- Mapbox Assembly -->
+  <link href="https://api.mapbox.com/mapbox-assembly/v0.24.0/assembly.min.css" rel="stylesheet">
+  <script async defer src="https://api.mapbox.com/mapbox-assembly/v0.24.0/assembly.js"></script>
+
+  <!-- D3 -->
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+
+  <!-- Local stylesheet -->
+  <link rel="stylesheet" href="css/site.css" type="text/css">
+
+</head>
+
+<body>
+
+	<header class='px24 py12 my24 mx-auto container bg-blue-faint border border--light'>
+    
+		<h1 class='txt-h1 align-center'>COVID 19 Tweets</h1>
+
+		<h3 class='txt-h3 align-center'>SubHeader</h3>
+
+    </header>
+
+  <section class='container px12 py12 border border--light'>
+
+  	<div class='prose align-left'>
+		<p>Each point is a retweet of a specific tweet...</p>
+	</div>
+
+    <svg width="1000" height="800"></svg>
+
+    <button class='btn btn--s bg-gray bg-blue-on-hover' id='reset-zoom'>Reset Zoom</button>
+
+    
+  </section>
+  <script src="js/site.js"></script>
+</body>
+</html>
