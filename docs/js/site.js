@@ -1,10 +1,11 @@
-// dimensions and margins
+// Setup the size and such
 var svg    = d3.select("svg"),
     width  = +svg.attr("width"),
     height = +svg.attr("height"),
 
-width = 0.8*width;
-height = 0.8*height;
+    width = 0.8*width;
+    height = 0.8*height;
+
 var margin = {top: (0.1*width), right: (0.1*width), bottom: (0.1*width), left: (0.1*width)};
 
 // create a clipping region 
@@ -25,14 +26,8 @@ var points //make it global
 // Load json data, make graph
 d3.json('data/dates.json',function(err, data){
 
-	if(err) throw err
-
-	//Build the data
-	data.forEach(d=>{
-		d.d = new Date(d.date),
-		d.c = +d.count
-	})
-
+	if(err){throw err}else{ data = parseData(data) }
+	
 	// create scale objects
 	var xScale = d3.scaleTime()
 	  .domain(d3.extent(data,function(d){return d.d}))
@@ -43,39 +38,33 @@ d3.json('data/dates.json',function(err, data){
 	  .range([height, 0]);
 
 	// create axis objects
+	var xAxis = d3.axisBottom(xScale)
+	var yAxis = d3.axisLeft(yScale)
+	
+	var gX = svg.append('g')
+	  .attr('transform', 'translate(' + margin.left + ',' + (margin.top + height) + ')')
+	  .call(xAxis);
 
-var xAxis = d3.axisBottom(xScale)
-  // .ticks(20);
-var yAxis = d3.axisLeft(yScale)
-  // .ticks(20, "s");
-// Draw Axis
+	var gY = svg.append('g')
+	  .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+	  .call(yAxis);
 
-var gX = svg.append('g')
-  .attr('transform', 'translate(' + margin.left + ',' + (margin.top + height) + ')')
-  .call(xAxis);
-var gY = svg.append('g')
-  .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-  .call(yAxis);
-
-    points = points_g.selectAll("circle").data(data);
+    points = points_g.selectAll("circle").data(data); // wbiw
 	points = points.enter().append("circle")
-	      .attr('cx', function(d) {return xScale(d.d)})
-	      .attr('cy', function(d) {return yScale(d.c)})
-	      .attr('r', 5);
+		.attr('r', 25) // To be data driven...
+		.attr('class','tweet-circle')
+		.attr('fill','steelblue') //To be data driven
+	    .attr('cx', function(d) {return xScale(d.d)})
+	    .attr('cy', function(d) {return yScale(d.c)})
+	    .on("click", handleClick)
+	    .on("mouseover", handleMouseOver)
+        .on("mouseout", handleMouseOut);
 	      
 	// Pan and zoom
-	var zoom = d3.zoom()
-	    .scaleExtent([.5, 20])
+	var zoom = svg.call(d3.zoom()
+	    .scaleExtent([.5, 2])
 	    .extent([[0, 0], [width, height]])
-	    .on("zoom", zoomed);
-
-	var gElem = svg.append("rect")
-	    .attr("width", width)
-	    .attr("height", height)
-	    .style("fill", "none")
-	    .style("pointer-events", "all")
-	    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-	    .call(zoom);
+	    .on("zoom", zoomed));
 
 	function zoomed() {
 		// create new scale ojects based on event
@@ -86,16 +75,22 @@ var gY = svg.append('g')
 	    gX.call(xAxis.scale(new_xScale));
 	    gY.call(yAxis.scale(new_yScale));
 	    
+        div.transition()
+         .duration(100)
+         .style("opacity",0)
+
 	    points.data(data)
 	     .attr('cx', function(d) {return new_xScale(d.d)})
-	     .attr('cy', function(d) {return new_yScale(d.c)});
+	     .attr('cy', function(d) {return new_yScale(d.c)})
 	}
 
-	document.getElementById('reset-zoom').addEventListener('click',function(e) {
-  		gElem.transition()
-          .duration(750)
-          .call(zoom.transform, d3.zoomIdentity);
-	});
+	// document.getElementById('reset-zoom').addEventListener('click',function(e) {
+	// 	console.log("Resetting Zoom?")  		
+	// });
 
 })
 
+var div = d3.select("body").append("div")
+      .attr('id', 'tooltip')
+	  .attr("class", "tooltip")
+	  .style("opacity", 0);
