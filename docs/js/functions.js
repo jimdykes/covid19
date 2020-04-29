@@ -2,13 +2,36 @@
   SECTION I
   DATA PARSING AND CLEANING
 */
+
+var distinctTweetIDsList
 function parseData(data){
+  var distinctTweetIDs = new Set()
   //Build the data
-  data.forEach(d=>{
-    d.d = new Date(d.date),
-    d.c = +d.count
+  var to_return = []
+  console.log(data.length)
+  data.forEach(function(d){
+    // if (d.retweeted_status_id == 1253995619921821700){
+      if (d.followers_count > 1000){
+        to_return.push({
+          d: new Date(d.created_at),
+          v: +d.followers_count_cumsum,
+          f: +d.followers_count,
+          r: d.retweeted_status_id,
+          id: d.id
+        })
+      }
+      
+    // }
+    
+    distinctTweetIDs.add(d.retweeted_status_id)
   })
-  return data
+
+  console.log(distinctTweetIDs)
+  distinctTweetIDsList = Array.from(distinctTweetIDs)
+
+  console.log(to_return.length)
+
+  return to_return;
 }
 
 /*
@@ -31,7 +54,7 @@ function handleClick(d, i) {  // Add interactivity
 function handleMouseOver(d, i) {
   console.warn('mouse over')
 
-  document.getElementById('tweet-text').innerHTML = d.text
+  document.getElementById('tweet-text').innerHTML = `${d.f}, ${d.id}`
   // Use D3 to select element, change color back to normal
 
   // // Select text by id and then remove

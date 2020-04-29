@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Display a map</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet" />
+
+<script src="js/axis-generators.js"></script>
+
+<style>
+	body { margin: 0; padding: 0; }
+	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoiamVubmluZ3NhbmRlcnNvbiIsImEiOiIzMHZndnpvIn0.PS-j7fRK3HGU7IE8rbLT9A';
+	var map = new mapboxgl.Map({
+		container: 'map', // container id
+		style: 'mapbox://styles/mapbox/light-v9', // stylesheet location
+		center: [-112,46.5], // starting position [lng, lat]
+		zoom: 15,
+		hash: true
+	});
+
+	var xAxis = new TimeLineXAxis({
+		origin: [-112,46.5],
+		'min':new Date("2020-04-01T00:00:00Z"),
+		'max':new Date("2020-04-27T00:00:00Z"),
+	})
+
+	xAxis.buildStops(map.getZoom())	
+
+	// map.on('zoomend',function(){
+
+	// })
+
+	map.on('load', function() {
+		map.addSource('xAxis', {
+			'type': 'geojson',
+			'data': xAxis.buildStops(map.getZoom())	
+		});
+	
+		map.addLayer({
+			'id': 'xAxis',
+			'type': 'circle',
+			'source': 'xAxis',
+			'paint': {
+				'circle-color': 'red',
+				'circle-radius': 8,
+				'circle-opacity':0.8
+			}
+		});
+	});
+
+</script>
+ 
+</body>
+</html>

@@ -24,7 +24,7 @@ var points_g = svg.append("g")
 var points //make it global
 
 // Load json data, make graph
-d3.json('data/dates.json',function(err, data){
+d3.json('data/who_retweet_data.json',function(err, data){
 
 	if(err){throw err}else{ data = parseData(data) }
 	
@@ -34,7 +34,7 @@ d3.json('data/dates.json',function(err, data){
 	  .range([0, width]);
 
 	var yScale = d3.scaleLinear()
-	  .domain(d3.extent(data,function(d){return d.c}))
+	  .domain(d3.extent(data,function(d){return d.v}))
 	  .range([height, 0]);
 
 	// create axis objects
@@ -49,13 +49,16 @@ d3.json('data/dates.json',function(err, data){
 	  .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 	  .call(yAxis);
 
+	var colorPalette = d3.schemeCategory20;
+
     points = points_g.selectAll("circle").data(data); // wbiw
 	points = points.enter().append("circle")
-		.attr('r', 25) // To be data driven...
+		.attr('r', function(d) {return +Math.log(d.f+1)/3}) // To be data driven...
 		.attr('class','tweet-circle')
-		.attr('fill','steelblue') //To be data driven
+		// .attr('fill','steelblue') //To be data driven
+		.attr('fill',function(d) {return colorPalette[distinctTweetIDsList.indexOf(d.r)]})
 	    .attr('cx', function(d) {return xScale(d.d)})
-	    .attr('cy', function(d) {return yScale(d.c)})
+	    .attr('cy', function(d) {return yScale(d.v)})
 	    .on("click", handleClick)
 	    .on("mouseover", handleMouseOver)
         .on("mouseout", handleMouseOut);
@@ -81,7 +84,7 @@ d3.json('data/dates.json',function(err, data){
 
 	    points.data(data)
 	     .attr('cx', function(d) {return new_xScale(d.d)})
-	     .attr('cy', function(d) {return new_yScale(d.c)})
+	     .attr('cy', function(d) {return new_yScale(d.v)})
 	}
 
 	// document.getElementById('reset-zoom').addEventListener('click',function(e) {
