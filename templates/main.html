@@ -21,7 +21,7 @@
 
   <!-- Local stylesheet -->
   <link rel="stylesheet" href="css/site.css" type="text/css">
-  <script src="js/functions.js"></script>
+  <script src="js/plotly-handler.js"></script>
 
 </head>
 
@@ -29,56 +29,37 @@
 
 	<header class='px24 py12 my24 mx-auto container bg-blue-faint border border--light'>
     
-		<h1 class='txt-h1 align-center'>COVID 19 Tweets</h1>
+		<h1 class='txt-h1 align-center'>{{ TITLE }}</h1>
 
-		<h3 class='txt-h3 align-center'>SubHeader</h3>
+		<h3 class='txt-h3 align-center'>{{ SUBHEADER }}</h3>
 
     </header>
 
-  <section class='container px12 py12 border border--light'>
+  <section class='container px12 py12'>
 
   	<div class='prose align-left'>
-		<p>Each point is a retweet of a specific tweet...</p>
-	</div>
-      
+	   	<p>Each point represents a specific retweet</p>
+	  </div>
+
+    <hr>
+    <div id="clickedTweet" class='border border--light my12 px12 py12'>
+      <h4 class='txt-h4'>Clicked Tweet: </h4>
+      <p><strong>User: </strong>@<span id='clickedScreenName'></span></p>
+      <p><strong>Followers: </strong> <span id='clickedFollowerCount'></span></p>
+      <p><strong>Tweet: </strong> <span id='clickedTweetText'></span></p>
+      <p><strong>Id: </strong> <span id='clickedTweetId'></span></p>
+    </div>
+
+    <div id="currentTweet">
+      <p><strong>User: @</strong><span id='currentScreenName'></span> | <span id='currentFollowerCount'></span> followers</p>
+    </div>      
       
     {{{ PLOTLY_1 }}}
 
 
-    <div id='selected-tweet'>
-      <p id='tweet-text'>Hover over a tweet to see the text here</p>
-    </div>
     
+
   </section>
-    
-    
-    <script type='text/javascript'>
-        
-        console.log("hi");
-        
-        var myPlot = document.getElementsByClassName('plotly-graph-div js-plotly-plot')[0];
-        console.log(myPlot)
-        
-        myPlot.on('plotly_click', function(data){
-
-              var pn='',
-                  tn='',
-                  colors=[];
-              for(var i=0; i < data.points.length; i++){
-                pn = data.points[i].pointNumber;
-                tn = data.points[i].curveNumber;
-                colors = data.points[i].data.marker.color;
-              };
-              colors[pn] = '#C54C82';
-
-              var update = {'marker':{color: colors, size:16}};
-              Plotly.restyle("bc9af3c5-1553-4c61-a791-2248dd2164b7", update, [tn]);
-
-            console.log(data)
-        })
-
-        
-    </script>
 
 </body>
 </html>
