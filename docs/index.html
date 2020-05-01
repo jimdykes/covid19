@@ -15,13 +15,8 @@
   <link href="https://api.mapbox.com/mapbox-assembly/v0.24.0/assembly.min.css" rel="stylesheet">
   <script async defer src="https://api.mapbox.com/mapbox-assembly/v0.24.0/assembly.js"></script>
 
-  <!-- D3 -->
-  <script src="https://d3js.org/d3.v4.min.js"></script>
-  <script src="https://d3js.org/colorbrewer.v1.min.js"></script>
-
   <!-- Local stylesheet -->
   <link rel="stylesheet" href="css/site.css" type="text/css">
-  <script src="js/functions.js"></script>
 
 </head>
 
@@ -29,29 +24,41 @@
 
 	<header class='px24 py12 my24 mx-auto container bg-blue-faint border border--light'>
     
-		<h1 class='txt-h1 align-center'>COVID 19 Tweets</h1>
+		<h1 class='txt-h1 align-center'>Visualizing COVID19 On Twitter</h1>
 
-		<h3 class='txt-h3 align-center'>SubHeader</h3>
+		<!-- <h3 class='txt-h3 align-center'>{{ SUBHEADER }}</h3> -->
 
     </header>
 
   <section class='container px12 py12 border border--light'>
 
   	<div class='prose align-left'>
-		<p>Each point is a retweet of a specific tweet...</p>
+		<p>Intro text</p>
 	</div>
 
-    <svg width="1000" height="800"></svg>
+	<div class='my12' id='visualizaitons'>
+		<h4 class='txt-h4 py24'>Current Visualizations: </h4>
 
-    <!-- <button class='btn btn--s bg-gray bg-blue-on-hover' id='reset-zoom'>Reset Zoom</button> -->
+		<ul class='align-center inline-block'>
+			<li>
+				<a class='link' target="_blank" href="who.html">
+					<img width="400" src="img/who-thumbnail.jpg" />
+					<p class='txt-l'>World Health Organization Top Retweeted Tweets</p>
+				</a>
+			</li>
 
+			<li>
+				<a class='link' target="_blank" href="cdc.html">
+					<img width="400" src="img/cdc-thumbnail.jpg" />
+					<p class='txt-l'>Center for Disease Control Top Retweeted Tweets</p>
+				</a>
+			</li>
 
-    <div id='selected-tweet'>
-      <p id='tweet-text'>Hover over a tweet to see the text here</p>
-    </div>
-    
+		</ul>
+
+	</div>
+
   </section>
-  <script src="js/site.js"></script>
 
 </body>
 </html>

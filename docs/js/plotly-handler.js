@@ -1,3 +1,7 @@
+/*
+  Jennings Anderson, Project EPIC (2020)
+*/
+
 
 var EpicPlotHanlder = function(plot){
 
@@ -16,35 +20,30 @@ var EpicPlotHanlder = function(plot){
   plot.on('plotly_hover', function(data){
 
     const thisIndex = data.points[0].pointIndex;
-    console.log(thisIndex) 
-
-    // console.log(data.points[0].data.meta)
-
+    const seriesName = data.points[0].data.name
+  
     currentScreenName.innerHTML = data.points[0].data.meta.u[thisIndex]
     currentFollowerCount.innerHTML = data.points[0].data.meta.f[thisIndex]
-    currentTweetText.innerHTML = data.points[0].data.meta.t[thisIndex]
-
-    // currentTweetText.innerHTML = data.points[0].data.meta.i[thisIndex]
+    currentTweetText.innerHTML = DATA[seriesName].text
   })
 
   // add event listeners
   plot.on('plotly_click', function(data){
 
     const thisIndex = data.points[0].pointIndex;
-    console.log(thisIndex) 
+    const seriesName = data.points[0].data.name
+    
+    console.log(thisIndex, seriesName) 
 
     clickedScreenName.innerHTML = data.points[0].data.meta.u[thisIndex]
     clickedFollowerCount.innerHTML = data.points[0].data.meta.f[thisIndex]
-    clickedTweetText.innerHTML = data.points[0].data.meta.t[thisIndex]
+    clickedTweetText.innerHTML = DATA[seriesName].text
     clickedTweetId.innerHTML = '<a class="link" target="_blank" href="//twitter.com/i/web/status/'+
                                   data.points[0].data.meta.i[thisIndex]+'">'+
                                   data.points[0].data.meta.i[thisIndex]+'</a>'
 
   })
-
 }
-
-
 
 /*
   Silly complex ... but it works, and we're doing Object Oriented Javascript :) 
@@ -67,4 +66,4 @@ var triesInterval = setInterval(function(){
       if (tries>10) clearInterval(triesInterval)  
       console.warn("Failed to load after 10 seconds")
     } 
-  }, 1000); //Exponential backoff
+  }, 1000); 
