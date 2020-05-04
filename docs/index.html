@@ -33,29 +33,69 @@
   <section class='container px12 py12 border border--light'>
 
   	<div class='prose align-left'>
-		<p>Intro text</p>
+		<h4 class='txt-h4'>Retweet Diffusion Graphs</h4>
+        <p class='txt-m'>Each dot on these graphs indicates a retweet of a specific tweet. The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the audience exposed to the retweet). The vertical location of the dot is the cumulative sum of the number of followers for each retweeter. The Y-axis then represents the potential size of the audience that has been exposed to that tweet. Read the example at the bottom of this page for more information.</p>
 	</div>
 
 	<div class='my12' id='visualizaitons'>
-		<h4 class='txt-h4 py24'>Current Visualizations: </h4>
-
-		<ul class='align-center inline-block'>
-			<li>
+        <p class='txt-em'>Click on a graph for the interactive versions:</p>
+		<ul class='align-center'>
+			<li class='inline-block mx24 my24'>
 				<a class='link' target="_blank" href="who.html">
 					<img width="400" src="img/who-thumbnail.jpg" />
-					<p class='txt-l'>World Health Organization Top Retweeted Tweets</p>
+					<p class='txt-l'>World Health Organization (Top 25)</p>
 				</a>
 			</li>
 
-			<li>
+			<li class='inline-block mx24 my24'>
 				<a class='link' target="_blank" href="cdc.html">
 					<img width="400" src="img/cdc-thumbnail.jpg" />
-					<p class='txt-l'>Center for Disease Control Top Retweeted Tweets</p>
+					<p class='txt-l'>Center for Disease Control (Top 25)</p>
 				</a>
 			</li>
-
+            
+            <li class='inline-block mx24 my24'>
+				<a class='link' target="_blank" href="cdc-keyword.html">
+					<img width="400" src="img/cdc-keyword-thumbnail.jpg" />
+					<p class='txt-l'>Top 25 Retweeted with keyword '@CDCGov'</p>
+				</a>
+			</li>
 		</ul>
+        
+        <hr class='txt-hr'>
+        <div class='prose'>
+            <p class='txt'>Example</p>
+            <table class='txt-s w600 inline-block'>
+                <tr><th>Day</th><th>Action</th><th>Y-Value</th><th>Dot Size</th>
+                </tr>
+                <tr><th>1</th>
+                    <td>Tweet Posted</td>
+                    <td>None</td><td>N/A</td>
+                </tr>
+                <tr><th>2</th>
+                    <td>Tweet is first retweeted by a user with 100 followers</td>
+                    <td>100</td><td>Smallest</td>
+                </tr>
+                <tr><th>3</th>
+                    <td>Retweeted by user with 5,000 followers</td>
+                    <td>5,100</td><td>Medium</td>
+                </tr>
+                <tr><th>4</th>
+                    <td>Retweeted by user with 10,000 followers </td>
+                    <td>15,100</td><td>Large</td>
+                </tr>
+                <tr><th>5</th>
+                    <td>Retweeted by user with 100,000 followers </td>
+                    <td>115,100</td><td>Very Large</td>
+                </tr>
+                <tr><th>6</th>
+                    <td>Retweeted by user with 100 followers </td>
+                    <td>115,200</td><td>Smallest</td>
+                </tr>
+            </table>
+            <img class='inline-block' width="320" src="img/example.jpg" />
 
+        </div>
 	</div>
 
   </section>
