@@ -2,6 +2,10 @@
   Jennings Anderson, Project EPIC (2020)
 */
 
+//https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 var EpicPlotHandler = function(plot){
 
@@ -22,7 +26,7 @@ var EpicPlotHandler = function(plot){
     const seriesName = data.points[0].data.name
   
     currentScreenName.innerHTML = data.points[0].data.meta.u[thisIndex]
-    currentFollowerCount.innerHTML = data.points[0].data.meta.f[thisIndex]
+    currentFollowerCount.innerHTML = numberWithCommas(data.points[0].data.meta.f[thisIndex])
     currentTweetText.innerHTML = DATA[seriesName].text
   })
 
@@ -35,7 +39,7 @@ var EpicPlotHandler = function(plot){
     console.log(thisIndex, seriesName) 
 
     clickedScreenName.innerHTML = data.points[0].data.meta.u[thisIndex]
-    clickedFollowerCount.innerHTML = data.points[0].data.meta.f[thisIndex]
+    clickedFollowerCount.innerHTML = numberWithCommas(data.points[0].data.meta.f[thisIndex])
     clickedTweetText.innerHTML = DATA[seriesName].text
     clickedTweetId.innerHTML = '<a class="link" target="_blank" href="//twitter.com/i/web/status/'+
                                   data.points[0].data.meta.i[thisIndex]+'">'+

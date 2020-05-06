@@ -32,9 +32,9 @@
 
 	<header class='px24 py12 my24 mx-auto container bg-blue-faint border border--light'>
     
-		<h1 class='txt-h1 align-center'>{{ TITLE }}</h1>
+		<h3 class='txt-h3 align-center'>{{ TITLE }}</h3>
 
-		<h3 class='txt-h3 align-center'>{{ SUBHEADER }}</h3>
+		<h5 class='txt-h5 align-center'>{{ SUBHEADER }}</h5>
 
     </header>
 
@@ -42,23 +42,29 @@
       
   	<div class='prose align-left'>
         <a href="/covid19/" class="link">< Back</a> 
-	   	<p>Each point represents a retweet. Hover or click on a tweet to see details.</p>
 	  </div>
 
     <hr>
     <div id="clickedTweet" class='border border--light my12 px12 py12'>
-      <h4 class='txt-h4'>Clicked Tweet: </h4>
-      <p><strong>User: </strong>@<span id='clickedScreenName'></span></p>
-      <p><strong>Followers: </strong> <span id='clickedFollowerCount'></span></p>
-      <p><strong>Tweet: </strong> <span id='clickedTweetText'></span></p>
-      <p><strong>Id: </strong> <span id='clickedTweetId'></span></p>
+    <p class='txt-s'>Clicked Tweet: </p>
+        <table class='table txt-s w300'>
+            <tr><th>Username</th><th>Followers</th><th>Link</th>
+            <tr>
+                <td><span class='username' id='clickedScreenName'></td>
+                <td><span id='clickedFollowerCount'></span></td>
+                <td><span id='clickedTweetId'></span></td>
+            </tr>
+        </table>
+        <p><span id='clickedTweetText'></span></p>
     </div>
-
+    
+    <p class='txt-s'>Each point represents a retweet. Hover or click on a tweet to see details.</p>
     <div id="currentTweet">
-      <p><strong>User: @</strong><span id='currentScreenName'></span> | <span id='currentFollowerCount'></span> followers</p>
+      <p><span class='username' id='currentScreenName'></span> | <span id='currentFollowerCount'></span> followers</p>
       <p><span id='currentTweetText'></span></p>
     </div>
 
+    
     <script type="text/javascript">
         {{{ INJECTED_JAVASCRIPT }}}
     </script>
@@ -66,6 +72,7 @@
     {{{ PLOTLY_1 }}}
         
     <div>
+        <p class='prose txt-s'>Original tweets ranked by total retweet count (not followers):</p>
         <table id='tweet-table' class='table'>
             <tr><th>Rank</th> <th>Username</th> <th>Text</th></tr>
         </table>

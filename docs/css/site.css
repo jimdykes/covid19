@@ -7,6 +7,21 @@ body{
 	margin: 0 auto;
 }
 
+
+div#currentTweet{
+  min-height:75px;
+}
+
+div#clickedTweet{
+  min-height:175px;
+}
+
+.username::before {
+  content: "@";
+}
+
+
+
 /*.tweet-circle{
 	fill: steelblue;
 }
