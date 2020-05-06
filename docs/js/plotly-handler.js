@@ -3,7 +3,7 @@
 */
 
 
-var EpicPlotHanlder = function(plot){
+var EpicPlotHandler = function(plot){
 
   console.log("Initializing runTime object: ", plot.id);
 
@@ -15,7 +15,6 @@ var EpicPlotHanlder = function(plot){
   var clickedFollowerCount = document.getElementById('clickedFollowerCount');
   var clickedTweetText = document.getElementById('clickedTweetText');
   var clickedTweetId = document.getElementById('clickedTweetId');
-
 
   plot.on('plotly_hover', function(data){
 
@@ -43,6 +42,17 @@ var EpicPlotHanlder = function(plot){
                                   data.points[0].data.meta.i[thisIndex]+'</a>'
 
   })
+    
+  //Built out the table?
+  var tweetTable = document.getElementById('tweet-table');
+  _.sortBy(Object.values(DATA),function(x){return x.rank}).forEach(function(t){
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td style="background-color:'+t.color+';">'+t.rank+'</td>'+
+          '<td><a class="link" target="_blank" href="//twitter.com/'+t.user+'">@'+t.user+'</a></td>'+
+          '<td>'+t.text+
+          ' <a target="_blank" class="link" href="//twitter.com/i/web/status/'+t.id+'">[View on Twitter]</a>'+'</td>';
+      tweetTable.appendChild(tr);
+  })
 }
 
 /*
@@ -61,7 +71,7 @@ var triesInterval = setInterval(function(){
     
     if ( (plotObjects.length > 0) ){
       clearInterval(triesInterval)
-      runTime = new EpicPlotHanlder(plotObjects.item(0))
+      runTime = new EpicPlotHandler(plotObjects.item(0))
     }else{
       if (tries>10) clearInterval(triesInterval)  
       console.warn("Failed to load after 10 seconds")

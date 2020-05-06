@@ -18,6 +18,9 @@
   <!-- D3 -->
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="https://d3js.org/colorbrewer.v1.min.js"></script>
+    
+  <!-- Lodash -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"> </script>
 
   <!-- Local stylesheet -->
   <link rel="stylesheet" href="css/site.css" type="text/css">
@@ -61,6 +64,13 @@
     </script>
       
     {{{ PLOTLY_1 }}}
+        
+    <div>
+        <table id='tweet-table' class='table'>
+            <tr><th>Rank</th> <th>Username</th> <th>Text</th></tr>
+        </table>
+        
+    </div>
 
 
   </section>
