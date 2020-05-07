@@ -78,6 +78,6 @@ var triesInterval = setInterval(function(){
       runTime = new EpicPlotHandler(plotObjects.item(0))
     }else{
       if (tries>10) clearInterval(triesInterval)  
-      console.warn("Failed to load after 10 seconds")
+      console.warn("Failed to load after 30 seconds")
     } 
-  }, 1000); 
+  }, 3000); 
