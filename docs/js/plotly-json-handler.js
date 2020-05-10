@@ -30,9 +30,10 @@ var PlotlyJSONHandler = function(tweets){
   var clickedTweetText     = document.getElementById('clickedTweetText');
   var clickedTweetId       = document.getElementById('clickedTweetId');
 
-  var plot;
+  var plotDiv = document.getElementById('diffusion_graph_cumulative_followers');
+
   //First, load the data
-  Plotly.d3.json('assets/who.json', function(err, fig) {
+  Plotly.d3.json(plotDiv.dataset.json, function(err, fig) {
 
     console.log(fig.layout)
 
@@ -61,7 +62,9 @@ var PlotlyJSONHandler = function(tweets){
       
       console.log(thisIndex, seriesName) 
 
-      clickedScreenName.innerHTML = data.points[0].data.meta.u[thisIndex]
+      clickedScreenName.innerHTML = '<a class="link" target="_blank" href="//twitter.com/'+
+                                    data.points[0].data.meta.u[thisIndex]+'">@'+
+                                    data.points[0].data.meta.u[thisIndex]+'</a>'
       clickedFollowerCount.innerHTML = numberWithCommas(data.points[0].data.meta.f[thisIndex])
       clickedTweetText.innerHTML = fig.tweets[seriesName].text
       clickedTweetId.innerHTML = '<a class="link" target="_blank" href="//twitter.com/i/web/status/'+
