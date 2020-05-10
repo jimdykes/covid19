@@ -35,14 +35,10 @@ var PlotlyJSONHandler = function(tweets){
   //First, load the data
   Plotly.d3.json(plotDiv.dataset.json, function(err, fig) {
 
-    console.log(fig.layout)
-
     var plotDiv = document.getElementById('diffusion_graph_cumulative_followers');
 
     //Create cumulative follower plot
     Plotly.newPlot(plotDiv, fig.data, fig.layout);
-
-    console.log(fig.data)
 
     //Add interaction
     plotDiv.on('plotly_hover', function(data){
