@@ -30,15 +30,13 @@ var PlotlyJSONHandler = function(tweets){
   var clickedTweetText     = document.getElementById('clickedTweetText');
   var clickedTweetId       = document.getElementById('clickedTweetId');
 
-  var plotDiv = document.getElementById('diffusion_graph_cumulative_followers');
+  var plotDiv = document.getElementById('diffusion_graph');
 
   //First, load the data
   Plotly.d3.json(plotDiv.dataset.json, function(err, fig) {
 
-    var plotDiv = document.getElementById('diffusion_graph_cumulative_followers');
-
     //Create cumulative follower plot
-    Plotly.newPlot(plotDiv, fig.data, fig.layout);
+    Plotly.react(plotDiv, fig.data, fig.layout);
 
     //Add interaction
     plotDiv.on('plotly_hover', function(data){
@@ -74,6 +72,40 @@ var PlotlyJSONHandler = function(tweets){
     //Turn off loading ICON if we got all the way here
     var container = document.getElementsByClassName('container').item(1);
         container.className = 'container px12 py12'
+
+
+    /* Create a copy and make a new plot for simple counts */
+
+    var nonCumulativeData = [];
+    fig.data.forEach(function(d){
+      var newData = JSON.parse(JSON.stringify(d))
+      newData.y = []
+      for(var i=1;i<newData.x.length+1;i++){
+        newData.y.push(i)
+      }
+      // newData.marker.line.width = 0;
+      nonCumulativeData.push(newData)
+    })
+
+    // console.log(nonCumulativeData)
+
+    var nonCumulativeLayout = JSON.parse(JSON.stringify(fig.layout)) //a favorite
+
+    nonCumulativeLayout.yaxis.title.text = "Total Retweet Count"
+
+    //And add our event listeners
+
+    document.getElementById('by-count').addEventListener('change', function(e){
+      document.getElementById('by-exposure-description').style.display='none';
+      document.getElementById('by-count-description').style.display='block';
+      Plotly.react(plotDiv, nonCumulativeData, nonCumulativeLayout);  
+    })
+
+    document.getElementById('by-exposure').addEventListener('change', function(e){
+      document.getElementById('by-exposure-description').style.display='block';
+      document.getElementById('by-count-description').style.display='none';
+      Plotly.react(plotDiv, fig.data, fig.layout);
+    })
   });
 }
 
