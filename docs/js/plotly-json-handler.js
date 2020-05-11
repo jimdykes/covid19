@@ -7,13 +7,20 @@ function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+function clickTweetInTable(tweetID){
+  console.log(tweetID)
+}
+
+var STATE = {}
+
 var PlotlyJSONHandler = function(tweets){
 
   function buildTweetTable(tweets){
-    var tweetTable = document.getElementById('tweet-table');
+    var tweetTable = document.getElementById('tweet-table-body');
     _.sortBy(Object.values(tweets),function(x){return x.rank}).forEach(function(t){
         var tr = document.createElement('tr');
-        tr.innerHTML = '<td style="background-color:'+t.color+';">'+t.rank+'</td>'+
+        tr.innerHTML = '<td class="cursor-pointer tweetIDButton" data-id="'+t.id+'" data-rank="'+t.rank+
+            '" style="background-color:'+t.color+';">'+t.rank+'</td>'+
             '<td><a class="link" target="_blank" href="//twitter.com/'+t.user+'">@'+t.user+'</a></td>'+
             '<td>'+t.text+
             ' <a target="_blank" class="link" href="//twitter.com/i/web/status/'+t.id+'">[View on Twitter]</a>'+'</td>';
@@ -34,6 +41,8 @@ var PlotlyJSONHandler = function(tweets){
 
   //First, load the data
   Plotly.d3.json(plotDiv.dataset.json, function(err, fig) {
+
+    // console.log(fig.layout)
 
     //Create cumulative follower plot
     Plotly.react(plotDiv, fig.data, fig.layout);
@@ -75,7 +84,6 @@ var PlotlyJSONHandler = function(tweets){
 
 
     /* Create a copy and make a new plot for simple counts */
-
     var nonCumulativeData = [];
     fig.data.forEach(function(d){
       var newData = JSON.parse(JSON.stringify(d))
@@ -94,7 +102,6 @@ var PlotlyJSONHandler = function(tweets){
     nonCumulativeLayout.yaxis.title.text = "Total Retweet Count"
 
     //And add our event listeners
-
     document.getElementById('by-count').addEventListener('change', function(e){
       document.getElementById('by-exposure-description').style.display='none';
       document.getElementById('by-count-description').style.display='block';
@@ -106,6 +113,31 @@ var PlotlyJSONHandler = function(tweets){
       document.getElementById('by-count-description').style.display='none';
       Plotly.react(plotDiv, fig.data, fig.layout);
     })
+
+    var buttons = document.getElementsByClassName('tweetIDButton'); 
+    // STATE
+    for (let button of buttons) {
+      button.addEventListener('click',function(e){
+        const tID = this.dataset.id;
+        const tRank = Number(this.dataset.rank)-1;
+        console.log(tID, tRank)
+
+        if (STATE.toggleRank == tRank){
+          var vals = plotDiv.data.map((_, i) => 1 )
+          Plotly.restyle(plotDiv, 'opacity', vals);  
+        }else{
+          STATE.toggleRank = tRank
+          var vals = plotDiv.data.map((_, i) => i === tRank ? 1 : 0)
+          Plotly.restyle(plotDiv, 'opacity', vals);
+        }
+      })
+    }
+
+
+    plotDiv.on('plotly_legenddoubleclick',function(e){
+      console.log(e)
+    })
+
   });
 }
 

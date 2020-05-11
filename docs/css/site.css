@@ -20,8 +20,6 @@ div#clickedTweet{
   content: "@";
 }
 
-
-
 /*.tweet-circle{
 	fill: steelblue;
 }
@@ -44,4 +42,20 @@ div.tooltip {
   background: white;
   border: 1px solid #444;
   border-radius: 8px;
+}
+
+/*table#tweet-table tbody{
+  height:300px;
+  overflow-y:scroll;
+}
+*/
+thead tr{
+  display:block;
+}
+
+tbody{
+  display:block;
+  overflow:auto;
+  height:400px;
+  width:100%;
 }
