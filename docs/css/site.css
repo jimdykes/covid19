@@ -49,11 +49,8 @@ div.tooltip {
   overflow-y:scroll;
 }
 */
-thead tr{
-  display:block;
-}
 
-tbody{
+table#tweet-table tbody{
   display:block;
   overflow:auto;
   height:400px;
