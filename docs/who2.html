@@ -71,12 +71,30 @@
       <p><span id='currentTweetText'></span></p>
     </div>
 
-    <div id='diffusion_graph_cumulative_followers' data-json='data/who.json'>
+        <div class='py12'>
+
+      <div class='toggle-group mr18 py12'>
+        <label class='pr12 txt-m' for='view-by'>View by:</label>
+        <label class='toggle-container'>
+          <input id='by-exposure' checked name='view-by' type='radio' />
+          <div class='toggle'>Potential Audience Exposure</div>
+        </label>
+        <label class='toggle-container'>
+          <input id='by-count' name='view-by' type='radio' />
+          <div class='toggle'>Total Retweet Count</div>
+        </label>
+      </div>
+
+      <p id='by-exposure-description' class=txt-s>Each dot on these graphs indicates a retweet of a specific tweet (distinguished by colors). The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the audience exposed to the tweet). The Y-value of the dot is the <em>cumulative sum</em> of the number of followers for each retweeter. The Y-axis then represents the <strong>potential size of the audience that has been exposed to the tweet</strong>. Note these cumulative sums do not include self-retweets, but may include duplicate followers.</p>
+
+      <p id='by-count-description' style="display:none;" class=txt-s>Each dot on these graphs indicates a retweet of a specific tweet (distinguished by colors). The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the audience exposed to the tweet). The Y-value of the dot reflects the total number of times the tweet was retweeted.</p>
+
+      <div id='diffusion_graph' data-json='data/who.json'>
 
     </div>
         
     <div>
-        <p class='prose txt-s'>Original tweets ranked by total retweet count (not followers):</p>
+        <p class='prose txt-s'>Original tweets ranked by total retweet count:</p>
         <table id='tweet-table' class='table'>
             <tr><th>Rank</th> <th>Username</th> <th>Text</th></tr>
         </table>
@@ -85,7 +103,7 @@
   </section>
 
   <!-- Load the JSON plot handler last -->
-  <script src="../docs/js/plotly-json-handler.js"></script>
+  <script src="js/plotly-json-handler.js"></script>
 
 </body>
 </html>
