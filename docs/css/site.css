@@ -7,23 +7,10 @@ body{
 	margin: 0 auto;
 }
 
-
-div#currentTweet{
-  min-height:75px;
-}
-
-div#clickedTweet{
-  min-height:175px;
-}
-
 .username::before {
   content: "@";
 }
 
-/*.tweet-circle{
-	fill: steelblue;
-}
-*/
 .tweet-circle:hover{
   stroke-width:4px;
   stroke: yellow;
@@ -43,12 +30,6 @@ div.tooltip {
   border: 1px solid #444;
   border-radius: 8px;
 }
-
-/*table#tweet-table tbody{
-  height:300px;
-  overflow-y:scroll;
-}
-*/
 
 table#tweet-table tbody{
   display:block;

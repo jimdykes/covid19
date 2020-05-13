@@ -35,17 +35,60 @@ var PlotlyJSONHandler = function(tweets){
   var clickedScreenName    = document.getElementById('clickedScreenName');
   var clickedFollowerCount = document.getElementById('clickedFollowerCount');
   var clickedTweetText     = document.getElementById('clickedTweetText');
-  var clickedTweetId       = document.getElementById('clickedTweetId');
+//   var clickedTweetId       = document.getElementById('clickedTweetId');
 
   var plotDiv = document.getElementById('diffusion_graph');
 
   //First, load the data
-  Plotly.d3.json('https://epic-covid19.storage.googleapis.com/diffusion-graphs/' + plotDiv.dataset.json, function(err, fig) {
+//   Plotly.d3.json('https://epic-covid19.storage.googleapis.com/diffusion-graphs/' + plotDiv.dataset.json, function(err, fig) {
+  Plotly.d3.json('' + plotDiv.dataset.json, function(err, fig) {
 
-    // console.log(fig.layout)
-
-    //Create cumulative follower plot
+    //Create cumulative follower plot with defaults
     Plotly.react(plotDiv, fig.data, fig.layout);
+            
+    //build out tweet table
+    buildTweetTable(fig.tweets);
+      
+    //Create copies of the data upfront: 
+    var datasets = {
+        'cumulative_followers_with_self_retweets': {
+            "data"   : JSON.parse(JSON.stringify(fig.data)),
+            "layout" : JSON.parse(JSON.stringify(fig.layout))
+        },
+        'retweet_count':{
+            "data"   : JSON.parse(JSON.stringify(fig.data)),
+            "layout" : JSON.parse(JSON.stringify(fig.layout))
+        }
+    }
+
+    // Work horse
+    var idx=0;
+    fig.data.forEach(function(d){
+//       console.log("Creating secondary, tertiary data for tweet: "+d.name)
+        
+      var addValue, sRTDate;
+      if (fig.tweets[d.name]['self-rt'].length){
+        addValue = fig.tweets[d.name]['self-rt'][0].subValue;
+        sRTDate  = fig.tweets[d.name]['self-rt'][0].x;
+//         console.log(sRTDate, addValue)
+      }
+              
+      for(var i=0;i< d.x.length+1;i++){
+
+        datasets.retweet_count.data[idx].y[i] = i+1;
+        
+        if (addValue && sRTDate){
+          if (d.x[i] >= sRTDate){              
+            datasets.cumulative_followers_with_self_retweets.data[idx].y[i] += addValue;
+          }
+        } 
+      }
+      idx++;
+    })
+    
+    //Update layouts? 
+    datasets.retweet_count.layout.yaxis.title.text = "Total Retweet Count"
+    datasets.cumulative_followers_with_self_retweets.layout.yaxis.title.text = "Cumulative Potential Impressions"
 
     //Add interaction
     plotDiv.on('plotly_hover', function(data){
@@ -55,7 +98,7 @@ var PlotlyJSONHandler = function(tweets){
     
       currentScreenName.innerHTML = data.points[0].data.meta.u[thisIndex]
       currentFollowerCount.innerHTML = numberWithCommas(data.points[0].data.meta.f[thisIndex])
-      currentTweetText.innerHTML = fig.tweets[seriesName].text
+//       currentTweetText.innerHTML = fig.tweets[seriesName].text
     })
 
     plotDiv.on('plotly_click', function(data){
@@ -70,49 +113,45 @@ var PlotlyJSONHandler = function(tweets){
                                     data.points[0].data.meta.u[thisIndex]+'</a>'
       clickedFollowerCount.innerHTML = numberWithCommas(data.points[0].data.meta.f[thisIndex])
       clickedTweetText.innerHTML = fig.tweets[seriesName].text
-      clickedTweetId.innerHTML = '<a class="link" target="_blank" href="//twitter.com/i/web/status/'+
-                                    data.points[0].data.meta.i[thisIndex]+'">'+
-                                    data.points[0].data.meta.i[thisIndex]+'</a>'
     })
 
-    //build out tweet table
-    buildTweetTable(fig.tweets);
 
-    //Turn off loading ICON if we got all the way here
-    var container = document.getElementsByClassName('container').item(1);
-        container.className = 'container px12 py12'
-
-
-    /* Create a copy and make a new plot for simple counts */
-    var nonCumulativeData = [];
-    fig.data.forEach(function(d){
-      var newData = JSON.parse(JSON.stringify(d))
-      newData.y = []
-      for(var i=1;i<newData.x.length+1;i++){
-        newData.y.push(i)
-      }
-      // newData.marker.line.width = 0;
-      nonCumulativeData.push(newData)
-    })
-
-    // console.log(nonCumulativeData)
-
-    var nonCumulativeLayout = JSON.parse(JSON.stringify(fig.layout)) //a favorite
-
-    nonCumulativeLayout.yaxis.title.text = "Total Retweet Count"
-
-    //And add our event listeners
+//  And add our event listeners
     document.getElementById('by-count').addEventListener('change', function(e){
       document.getElementById('by-exposure-description').style.display='none';
       document.getElementById('by-count-description').style.display='block';
-      Plotly.react(plotDiv, nonCumulativeData, nonCumulativeLayout);  
+      Plotly.react(plotDiv, datasets.retweet_count.data, datasets.retweet_count.layout);  
     })
+      
+    var includeRetweets=true;
+    document.getElementById('selfRetweetSwitch').addEventListener('change', function(e){
+      if (this.checked){
+        includeRetweets=true;
+        Plotly.react(plotDiv, 
+           datasets.cumulative_followers_with_self_retweets.data, 
+           datasets.cumulative_followers_with_self_retweets.layout);
+      }else{
+        includeRetweets=false;
+        Plotly.react(plotDiv, fig.data, fig.layout);
+      }
+    });
 
     document.getElementById('by-exposure').addEventListener('change', function(e){
       document.getElementById('by-exposure-description').style.display='block';
       document.getElementById('by-count-description').style.display='none';
-      Plotly.react(plotDiv, fig.data, fig.layout);
+        
+      if (includeRetweets){
+          Plotly.react(plotDiv, 
+                       datasets.cumulative_followers_with_self_retweets.data, 
+                       datasets.cumulative_followers_with_self_retweets.layout);
+      }else{
+          Plotly.react(plotDiv, fig.data, fig.layout);
+      }
     })
+    
+    //Turn off loading ICON if we got all the way here
+    var container = document.getElementsByClassName('container').item(1);
+        container.className = 'container px12 py12'      
 
     var buttons = document.getElementsByClassName('tweetIDButton'); 
     // STATE

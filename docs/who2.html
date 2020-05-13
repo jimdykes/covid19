@@ -32,78 +32,79 @@
 
 <body>
 
-	<header class='px24 py12 my24 mx-auto container bg-blue-faint border border--light'>
-    
-		<h3 class='txt-h3 align-center'>Top 25 Retweets of @WHO</h3>
-
-		<h5 class='txt-h5 align-center'>Diffusion of the top 25 most retweeted tweets from the World Health Organization</h5>
-
+    <header class='px24 py12 my24 mx-auto container bg-blue-faint border border--light'>
+        <h3 class='txt-h3 align-center'>Top 25 Retweets of @WHO</h3>
+        <h5 class='txt-h5 align-center'>Diffusion of the top 25 most retweeted tweets from the World Health Organization since mid-April</h5>
     </header>
 
-  <section class='container px12 py12 loading'>
-      
-  	<div class='prose align-left'>
+    <section class='container px12 py12 loading'>      
+        <div class='prose align-left'>
+            <a href="/covid19/" class="link">Back</a>         
+        </div>
+        <hr>
+
+        <div class='toggle-group mr18 py12'>
+            <label class='pr12 txt-m' for='view-by'>View by:</label>
+            <label class='toggle-container'>
+                <input id='by-exposure' checked name='view-by' type='radio' />
+                <div class='toggle'>Potential Audience Exposure</div>
+            </label>
+            <label class='toggle-container'>
+                <input id='by-count' name='view-by' type='radio' />
+                <div class='toggle'>Total Retweet Count</div>
+            </label>
+        </div>
+
+        <div id='by-exposure-description'>
+            <label class='switch-container'>
+                <input id='selfRetweetSwitch' type='checkbox' />
+                <div class='switch mr6'></div> Include Self-Retweets
+            </label>
+            <p class=txt-s>Each dot on these graphs indicates a retweet of a specific tweet (distinguished by colors). The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the audience exposed to the tweet). The Y-value of the dot is the <em>cumulative sum</em> of the number of followers for each retweeter. The Y-axis then represents the <strong>potential size of the audience that has been exposed to the tweet</strong>. Note these cumulative sums do may include duplicate followers.  Use the toggle above to include/exclude self-retweets.</p>
+        </div>
+
+        <p id='by-count-description' style="display:none;" class=txt-s>Each dot on these graphs indicates a retweet of a specific tweet (distinguished by colors). The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the audience exposed to the tweet). The Y-value of the dot reflects the total number of times the tweet was retweeted.</p>
+
+        <div id='diffusion_graph' data-json='data/who2.json'></div>
         
-        <a href="/covid19/" class="link">< Back</a> 
-        
-        <p class=txt-s>Each dot on these graphs indicates a retweet of a specific tweet (distinguished by colors). The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the audience exposed to the tweet). The Y-value of the dot is the <em>cumulative sum</em> of the number of followers for each retweeter. The Y-axis then represents the <strong>potential size of the audience that has been exposed to the tweet</strong>. Note these cumulative sums may include duplicate followers and self-retweets; private accounts are not counted.</p>
-        
-        
-	  </div>
+        <p class='txt-s'>Each point represents a retweet. Hover or click on a tweet to see details.</p>
 
-    <hr>
-    <div id="clickedTweet" class='border border--light my12 px12 py12'>
-    <p class='txt-s'>Clicked Tweet: </p>
-        <table class='table txt-s w300'>
-            <tr><th>Username</th><th>Followers</th><th>Link</th>
-            <tr>
-                <td><span id='clickedScreenName'></td>
-                <td><span id='clickedFollowerCount'></span></td>
-                <td><span id='clickedTweetId'></span></td>
-            </tr>
-        </table>
-        <p><span id='clickedTweetText'></span></p>
-    </div>
-    
-    <p class='txt-s'>Each point represents a retweet. Hover or click on a tweet to see details.</p>
-    <div id="currentTweet">
-      <p><span class='username' id='currentScreenName'></span> | <span id='currentFollowerCount'></span> followers</p>
-      <p><span id='currentTweetText'></span></p>
-    </div>
+        <div class='border border--light py6 px6 flex-parent flex-parent--row'>
+            <div class='flex-child' id="currentTweet">
+                <p class='txt-s'>Hovered Retweet: </p>
+                <table class='table txt-s w300'>
+                    <tr><th>Username</th><th>Followers</th></tr>
+                    <tr>
+                        <td><span id='currentScreenName'></span></td>
+                        <td><span id='currentFollowerCount'></span></td>
+                    </tr>
+                </table>
+            </div>
 
-        <div class='py12'>
+            <div class='flex-child ml24' id="clickedTweet">
+                <p class='txt-s'>Clicked retweet: </p>
+                <table class='table txt-s'>
+                    <tr><th>Username</th><th>Followers</th><th>Text</th></tr>
+                    <tr>
+                        <td><span id='clickedScreenName'></span></td>
+                        <td><span id='clickedFollowerCount'></span></td>
+                        <td><span class='txt-s' id='clickedTweetText'></span></td>
+                    </tr>
+                </table>
 
-      <div class='toggle-group mr18 py12'>
-        <label class='pr12 txt-m' for='view-by'>View by:</label>
-        <label class='toggle-container'>
-          <input id='by-exposure' checked name='view-by' type='radio' />
-          <div class='toggle'>Potential Audience Exposure</div>
-        </label>
-        <label class='toggle-container'>
-          <input id='by-count' name='view-by' type='radio' />
-          <div class='toggle'>Total Retweet Count</div>
-        </label>
-      </div>
+            </div>
+        </div>
+               
+        <p class='prose txt-s'>Original tweets ranked by total retweet count. Click on the ranking color to isolate that tweet above.</p>
 
-      <p id='by-exposure-description' class=txt-s>Each dot on these graphs indicates a retweet of a specific tweet (distinguished by colors). The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the audience exposed to the tweet). The Y-value of the dot is the <em>cumulative sum</em> of the number of followers for each retweeter. The Y-axis then represents the <strong>potential size of the audience that has been exposed to the tweet</strong>. Note these cumulative sums do not include self-retweets, but may include duplicate followers.</p>
-
-      <p id='by-count-description' style="display:none;" class=txt-s>Each dot on these graphs indicates a retweet of a specific tweet (distinguished by colors). The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the audience exposed to the tweet). The Y-value of the dot reflects the total number of times the tweet was retweeted.</p>
-
-      <div id='diffusion_graph' data-json='data/who.json'>
-
-    </div>
-        
-    <div>
-        <p class='prose txt-s'>Original tweets ranked by total retweet count:</p>
         <table id='tweet-table' class='table'>
-            <tr><th>Rank</th> <th>Username</th> <th>Text</th></tr>
+          <tbody id='tweet-table-body'> </tbody>
         </table>
-    </div>
 
-  </section>
+    </section>
 
-  <!-- Load the JSON plot handler last -->
-  <script src="js/plotly-json-handler.js"></script>
+    <!-- Load the JSON plot handler last -->
+    <script src="js/plotly-json-handler.js"></script>
 
 </body>
 </html>
