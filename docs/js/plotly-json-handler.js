@@ -40,8 +40,8 @@ var PlotlyJSONHandler = function(tweets){
   var plotDiv = document.getElementById('diffusion_graph');
 
   //First, load the data
-//   Plotly.d3.json('https://epic-covid19.storage.googleapis.com/diffusion-graphs/' + plotDiv.dataset.json, function(err, fig) {
-  Plotly.d3.json('' + plotDiv.dataset.json, function(err, fig) {
+  Plotly.d3.json('https://epic-covid19.storage.googleapis.com/diffusion-graphs/' + plotDiv.dataset.json, function(err, fig) {
+//   Plotly.d3.json('' + plotDiv.dataset.json, function(err, fig) {
 
     //Create cumulative follower plot with defaults
     Plotly.react(plotDiv, fig.data, fig.layout);
