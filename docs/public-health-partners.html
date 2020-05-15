@@ -33,8 +33,8 @@
 <body>
 
     <header class='px24 py12 my24 mx-auto container bg-blue-faint border border--light'>
-        <h3 class='txt-h3 align-center'>{{ TITLE }}</h3>
-        <h5 class='txt-h5 align-center'>{{{ SUBHEADER }}}</h5>
+        <h3 class='txt-h3 align-center'>Top 25 Retweets of Public Health Partners</h3>
+        <h5 class='txt-h5 align-center'>Diffusion of the top 25 most retweeted Public Health Partners <a href='https://twitter.com/i/lists/1247249555759955973'>(Twitter list)</a></h5>
     </header>
 
     <section class='container px12 py12 loading'>      
@@ -65,7 +65,7 @@
 
         <p id='by-count-description' style="display:none;" class=txt-s>Each dot on these graphs indicates a retweet of a specific tweet (distinguished by colors). The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the audience exposed to the tweet). The Y-value of the dot reflects the total number of times the tweet was retweeted.</p>
 
-        <div id='diffusion_graph' data-json='{{{ JSON }}}'></div>
+        <div id='diffusion_graph' data-json='data/public-health-partners.json'></div>
         
         <p class='txt-s'>Each point represents a retweet. Hover or click on a tweet to see details.</p>
 
