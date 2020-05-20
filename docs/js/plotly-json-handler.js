@@ -15,6 +15,8 @@ var STATE = {}
 
 var PlotlyJSONHandler = function(tweets){
 
+  var plotDiv = document.getElementById('diffusion_graph');
+
   function buildTweetTable(tweets){
     var tweetTable = document.getElementById('tweet-table-body');
     _.sortBy(Object.values(tweets),function(x){return x.rank}).forEach(function(t){
@@ -32,21 +34,17 @@ var PlotlyJSONHandler = function(tweets){
   var currentFollowerCount = document.getElementById('currentFollowerCount');
   var currentTweetText     = document.getElementById('currentTweetText');
 
-  var clickedScreenName    = document.getElementById('clickedScreenName');
-  var clickedFollowerCount = document.getElementById('clickedFollowerCount');
-  var clickedTweetText     = document.getElementById('clickedTweetText');
-//   var clickedTweetId       = document.getElementById('clickedTweetId');
-
-  var plotDiv = document.getElementById('diffusion_graph');
 
   //First, load the data
-  Plotly.d3.json('https://epic-covid19.storage.googleapis.com/diffusion-graphs/' + plotDiv.dataset.json, function(err, fig) {
+  // Plotly.d3.json('https://epic-covid19.storage.googleapis.com/diffusion-graphs/' + plotDiv.dataset.json, function(err, fig) {
+
+  Plotly.d3.json('http://epic.tweetsonamap.com/covid19-static-pages/docs/' + plotDiv.dataset.json, function(err, fig) {
 //   Plotly.d3.json('' + plotDiv.dataset.json, function(err, fig) {
 
-    //Create cumulative follower plot with defaults
-    Plotly.react(plotDiv, fig.data, fig.layout);
+    // Create cumulative follower plot with defaults
+    Plotly.react(plotDiv, fig.data, fig.layout, {displayModeBar: false});
             
-    //build out tweet table
+    // Build out tweet table
     buildTweetTable(fig.tweets);
       
     //Create copies of the data upfront: 
@@ -63,16 +61,21 @@ var PlotlyJSONHandler = function(tweets){
 
     // Work horse
     var idx=0;
+
+    var hasRetweets = false;
+
     fig.data.forEach(function(d){
-//       console.log("Creating secondary, tertiary data for tweet: "+d.name)
         
       var addValue, sRTDate;
       if (fig.tweets[d.name]['self-rt'].length){
         addValue = fig.tweets[d.name]['self-rt'][0].subValue;
         sRTDate  = fig.tweets[d.name]['self-rt'][0].x;
-//         console.log(sRTDate, addValue)
+
+        if (!hasRetweets){
+          hasRetweets = true;
+        }
       }
-              
+
       for(var i=0;i< d.x.length+1;i++){
 
         datasets.retweet_count.data[idx].y[i] = i+1;
@@ -93,48 +96,56 @@ var PlotlyJSONHandler = function(tweets){
     //Add interaction
     plotDiv.on('plotly_hover', function(data){
 
-      const thisIndex = data.points[0].pointIndex;
+      const thisIndex  = data.points[0].pointIndex;
       const seriesName = data.points[0].data.name
     
-      currentScreenName.innerHTML = data.points[0].data.meta.u[thisIndex]
+      currentScreenName.innerHTML = '<a href="https://twitter.com/i/web/status/'+fig.tweets[seriesName].id +
+      '" target="_blank" class="username link">'+data.points[0].data.meta.u[thisIndex] + "</a>"
       currentFollowerCount.innerHTML = numberWithCommas(data.points[0].data.meta.f[thisIndex])
-//       currentTweetText.innerHTML = fig.tweets[seriesName].text
-    })
-
-    plotDiv.on('plotly_click', function(data){
-
-      const thisIndex = data.points[0].pointIndex;
-      const seriesName = data.points[0].data.name
+      currentTweetText.innerHTML = '<a href="https://twitter.com/i/web/status/'+fig.tweets[seriesName].id +
+      '" target="_blank" class="username link">'+fig.tweets[seriesName].user + "</a> | " + fig.tweets[seriesName].text
       
-      console.log(thisIndex, seriesName) 
-
-      clickedScreenName.innerHTML = '<a class="link" target="_blank" href="//twitter.com/'+
-                                    data.points[0].data.meta.u[thisIndex]+'">@'+
-                                    data.points[0].data.meta.u[thisIndex]+'</a>'
-      clickedFollowerCount.innerHTML = numberWithCommas(data.points[0].data.meta.f[thisIndex])
-      clickedTweetText.innerHTML = fig.tweets[seriesName].text
     })
+
+    // plotDiv.on('plotly_click', function(data){
+
+    //   const thisIndex = data.points[0].pointIndex;
+    //   const seriesName = data.points[0].data.name
+      
+    //   console.log(thisIndex, seriesName) 
+
+    //   clickedScreenName.innerHTML = '<a class="link" target="_blank" href="//twitter.com/'+
+    //                                 data.points[0].data.meta.u[thisIndex]+'">@'+
+    //                                 data.points[0].data.meta.u[thisIndex]+'</a>'
+    //   clickedFollowerCount.innerHTML = numberWithCommas(data.points[0].data.meta.f[thisIndex])
+    //   clickedTweetText.innerHTML = fig.tweets[seriesName].text
+    // })
 
 
 //  And add our event listeners
     document.getElementById('by-count').addEventListener('change', function(e){
       document.getElementById('by-exposure-description').style.display='none';
       document.getElementById('by-count-description').style.display='block';
-      Plotly.react(plotDiv, datasets.retweet_count.data, datasets.retweet_count.layout);  
+      Plotly.react(plotDiv, datasets.retweet_count.data, datasets.retweet_count.layout, {displayModeBar: false});  
     })
-      
-    var includeRetweets=true;
-    document.getElementById('selfRetweetSwitch').addEventListener('change', function(e){
-      if (this.checked){
-        includeRetweets=true;
-        Plotly.react(plotDiv, 
-           datasets.cumulative_followers_with_self_retweets.data, 
-           datasets.cumulative_followers_with_self_retweets.layout);
-      }else{
-        includeRetweets=false;
-        Plotly.react(plotDiv, fig.data, fig.layout);
-      }
-    });
+
+    if (hasRetweets){
+      var includeRetweets=true;
+      document.getElementById('selfRetweetSwitch').addEventListener('change', function(e){
+        if (this.checked){
+          includeRetweets=true;
+          Plotly.react(plotDiv, 
+             datasets.cumulative_followers_with_self_retweets.data, 
+             datasets.cumulative_followers_with_self_retweets.layout, {displayModeBar: false});
+        }else{
+          includeRetweets=false;
+          Plotly.react(plotDiv, fig.data, fig.layout, {displayModeBar: false});
+        }
+      });
+    }else{
+      console.log("No retweets, hiding switch")
+      document.getElementById('includeSRT').style.display = 'none';
+    }
 
     document.getElementById('by-exposure').addEventListener('change', function(e){
       document.getElementById('by-exposure-description').style.display='block';
@@ -154,16 +165,18 @@ var PlotlyJSONHandler = function(tweets){
         container.className = 'container px12 py12'      
 
     var buttons = document.getElementsByClassName('tweetIDButton'); 
-    // STATE
+    
     for (let button of buttons) {
       button.addEventListener('click',function(e){
         const tID = this.dataset.id;
         const tRank = Number(this.dataset.rank)-1;
         console.log(tID, tRank)
+        console.log(STATE)
 
         if (STATE.toggleRank == tRank){
           var vals = plotDiv.data.map((_, i) => 1 )
-          Plotly.restyle(plotDiv, 'opacity', vals);  
+          Plotly.restyle(plotDiv, 'opacity', vals);
+          STATE.toggleRank = undefined;
         }else{
           STATE.toggleRank = tRank
           var vals = plotDiv.data.map((_, i) => i === tRank ? 1 : 0)

@@ -1,11 +1,12 @@
-body{
-	/*background-color:#1A62D4;*/
-}
-
 .container{
-	max-width:1200px;
+	max-width:1400px;
 	margin: 0 auto;
 }
+
+section#graph-container{
+  margin: 0 auto;;
+}
+
 
 .username::before {
   content: "@";
@@ -18,17 +19,6 @@ body{
 
 .selected{
   fill: red;
-}
-
-div.tooltip {
-  position: absolute;
-  text-align: center;
-  height: 28px;
-  padding: 5px;
-  font: 12px sans-serif;
-  background: white;
-  border: 1px solid #444;
-  border-radius: 8px;
 }
 
 table#tweet-table tbody{
