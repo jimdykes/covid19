@@ -1,0 +1,13 @@
+table : 'public_health_agencies'
+type  : 'retweet-simplified'
+start : '2020-04-22 20:26:07 UTC'
+
+TITLE:     Top 25 Retweets of Public Health Agencies
+
+SUBHEADER: "Diffusion of the top 25 most retweeted Public Health Agencies <a href='https://twitter.com/i/lists/1235273855331176448'>(Twitter list)</a>"
+
+JSON       : data/public-health-agencies.json
+
+data       : /home/jupyter/data/diffusion/public_health_top_25_retweeted
+
+output     : docs/public-health-agencies.html

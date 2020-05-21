@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164854974-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-164854974-1');
+  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+  <!-- Mapbox Assembly -->
+  <link href="https://api.mapbox.com/mapbox-assembly/v0.24.0/assembly.min.css" rel="stylesheet">
+  <script async defer src="https://api.mapbox.com/mapbox-assembly/v0.24.0/assembly.js"></script>
+
+  <!-- D3 -->
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://d3js.org/colorbrewer.v1.min.js"></script>
+
+  <!--Plotly -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>    
+    
+  <!-- Lodash -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"> </script>
+
+  <!-- Local stylesheet -->
+  <link rel="stylesheet" href="css/site.css" type="text/css">
+
+</head>
+
+<body>
+
+    <header class='px24 py12 my24 mx-auto container bg-blue-faint border border--light'>
+        <h3 class='txt-h3 align-center'>Top 25 Retweets about covid &amp; charts</h3>
+        <h5 class='txt-h5 align-center'>Diffusion of the top 25 most retweets with covid + charts/graphics keywords</h5>
+    </header>
+
+    <section class='container px12 py12 loading'>      
+        <div class='prose align-left'>
+            <a href="/covid19/" class="link">Back</a>         
+        </div>
+        <hr>
+
+        <div class='toggle-group mr18 py12'>
+            <label class='pr12 txt-m' for='view-by'>View by:</label>
+            <label class='toggle-container'>
+                <input id='by-exposure' checked name='view-by' type='radio' />
+                <div class='toggle'>Potential Audience Exposure</div>
+            </label>
+            <label class='toggle-container'>
+                <input id='by-count' name='view-by' type='radio' />
+                <div class='toggle'>Total Retweet Count</div>
+            </label>
+        </div>
+
+        <div id='by-exposure-description'>
+            <label id='includeSRT' class='switch-container'>
+                <input id='selfRetweetSwitch' type='checkbox' />
+                <div class='switch mr6'></div> Include Self-Retweets
+            </label>
+            <p class=txt-s>Each dot on these graphs indicates a retweet of a specific tweet (distinguished by colors). The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the audience exposed to the tweet). The Y-value of the dot is the <em>cumulative sum</em> of the number of followers for each retweeter. The Y-axis then represents the <strong>potential size of the audience that has been exposed to the tweet</strong>. Note these cumulative sums do may include duplicate followers.</p>
+        </div>
+
+        <p id='by-count-description' style="display:none;" class=txt-s>Each dot on these graphs indicates a retweet of a specific tweet (distinguished by colors). The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the audience exposed to the tweet). The Y-value of the dot reflects the total number of times the tweet was retweeted.</p>
+
+      </section>
+
+      <section id='graph-container' class='container'>
+        <div id='diffusion_graph' data-json='data/covid-charts.json'></div>
+      </section>
+      
+      <section class='container px12 py12'>
+        <p class='txt-s'>Each point represents a retweet, hover on a point to see details:</p>
+        <div class='py6 px6 flex-parent flex-parent--row'>
+          
+            <div class='flex-child' id="currentTweet">
+
+                <table class='table txt-s'>
+                    <tr><th>Retweeter</th><th>Followers</th><th>Original tweet</th></tr>
+                    <tr>
+                        <td class='w180'><span id='currentScreenName'></span></td>
+                        <td><span id='currentFollowerCount'></span></td>
+                        <td style="height:60px !important;">
+                          <span id='currentTweetText'></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+               
+        <p class='prose txt-s'>Original tweets ranked by total retweet count. Click on the ranking color to isolate that tweet above.</p>
+
+        <table id='tweet-table' class='table'>
+          <tbody id='tweet-table-body'> </tbody>
+        </table>
+
+    </section>
+
+    <!-- Load the JSON plot handler last -->
+    <script src="js/plotly-json-handler.js"></script>
+
+</body>
+</html>

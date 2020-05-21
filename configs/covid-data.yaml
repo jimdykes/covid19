@@ -1,0 +1,12 @@
+table: 'covid_data_representations'
+start: '2020-03-23 22:30:05 UTC' #SELECT min(PARSE_TIMESTAMP('%a %b %d %T %z %Y', created_at)) FROM `crypto-eon-164220.tweets.covid_data_representations` LIMIT 1
+
+TITLE:     Top 25 Retweets about covid & data
+
+SUBHEADER: Diffusion of the top 25 most retweets with covid + data keywords
+
+JSON:      data/covid-data.json
+
+data       : /home/jupyter/data/diffusion/covid-data_top_25_retweeted
+
+output     : docs/covid-data.html

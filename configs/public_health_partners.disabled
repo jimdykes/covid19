@@ -1,0 +1,14 @@
+table : 'public_health_partners'
+type  : 'retweet-simplified'
+start : '2020-04-22 20:32:02 UTC'
+
+TITLE:     Top 25 Retweets of Public Health Partners
+
+SUBHEADER: "Diffusion of the top 25 most retweeted Public Health Partners <a href='https://twitter.com/i/lists/1247249555759955973'>(Twitter list)</a>"
+
+JSON       : data/public-health-partners.json
+
+data       : /home/jupyter/data/diffusion/public_health_partners_top_25_retweeted
+
+output     : docs/public-health-partners.html
+

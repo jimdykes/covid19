@@ -1,0 +1,9 @@
+table: world_health_organization
+start: '2020-04-15 22:25:14' #beginning of WHO collection
+
+TITLE:     Top 25 Retweets of @WHO
+SUBHEADER: Diffusion of the top 25 most retweeted tweets from the World Health Organization since mid-April
+JSON:      data/who.json
+
+data       : /home/jupyter/data/diffusion/who_top_25_retweeted
+output     : docs/who.html

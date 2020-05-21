@@ -1,0 +1,12 @@
+table: cdc
+start: '2020-03-17 16:30:52'
+
+TITLE:     Top 25 Retweets mentioning @CDCGov or @CDCEmergency
+
+SUBHEADER: Diffusion of the top 25 most retweeted tweets with '@CDCGov' or '@CDCEmergency' since mid-March
+
+JSON:      data/cdc-keyword.json
+
+data       : /home/jupyter/data/diffusion/cdc_top_25_retweeted
+
+output     : docs/cdc-keyword.html

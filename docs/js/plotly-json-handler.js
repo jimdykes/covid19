@@ -11,7 +11,15 @@ function clickTweetInTable(tweetID){
   console.log(tweetID)
 }
 
+const urlParams = new URLSearchParams(window.location.search);
+const dataPath = urlParams.get('data') || 'https://epic-covid19.storage.googleapis.com/diffusion-graphs/'
+
 var STATE = {}
+
+var layoutExtras = {
+    displayModeBar: false}
+//     displaylogo: false,
+//     modeBarButtonsToRemove: ['toImage','hoverClosestCartesian','hoverCompareCartesian','toggleSpikelines', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'resetScale2d']}
 
 var PlotlyJSONHandler = function(tweets){
 
@@ -34,14 +42,14 @@ var PlotlyJSONHandler = function(tweets){
   var currentFollowerCount = document.getElementById('currentFollowerCount');
   var currentTweetText     = document.getElementById('currentTweetText');
 
-
+    
   //First, load the data
-  Plotly.d3.json('https://epic-covid19.storage.googleapis.com/diffusion-graphs/' + plotDiv.dataset.json, function(err, fig) {
+  Plotly.d3.json(dataPath + plotDiv.dataset.json, function(err, fig) {
 
   // Plotly.d3.json('http://epic.tweetsonamap.com/covid19-static-pages/docs/' + plotDiv.dataset.json, function(err, fig) {
 
     // Create cumulative follower plot with defaults
-    Plotly.react(plotDiv, fig.data, fig.layout, {displayModeBar: false});
+    Plotly.react(plotDiv, fig.data, fig.layout, layoutExtras);
             
     // Build out tweet table
     buildTweetTable(fig.tweets);
@@ -98,7 +106,7 @@ var PlotlyJSONHandler = function(tweets){
       const thisIndex  = data.points[0].pointIndex;
       const seriesName = data.points[0].data.name
     
-      currentScreenName.innerHTML = '<a href="https://twitter.com/i/web/status/'+fig.tweets[seriesName].id +
+      currentScreenName.innerHTML = '<a href="https://twitter.com/'+data.points[0].data.meta.u[thisIndex] +
       '" target="_blank" class="username link">'+data.points[0].data.meta.u[thisIndex] + "</a>"
       currentFollowerCount.innerHTML = numberWithCommas(data.points[0].data.meta.f[thisIndex])
       currentTweetText.innerHTML = '<a href="https://twitter.com/i/web/status/'+fig.tweets[seriesName].id +
@@ -125,7 +133,7 @@ var PlotlyJSONHandler = function(tweets){
     document.getElementById('by-count').addEventListener('change', function(e){
       document.getElementById('by-exposure-description').style.display='none';
       document.getElementById('by-count-description').style.display='block';
-      Plotly.react(plotDiv, datasets.retweet_count.data, datasets.retweet_count.layout, {displayModeBar: false});  
+      Plotly.react(plotDiv, datasets.retweet_count.data, datasets.retweet_count.layout, layoutExtras);  
     })
 
     if (hasRetweets){
@@ -135,10 +143,10 @@ var PlotlyJSONHandler = function(tweets){
           includeRetweets=true;
           Plotly.react(plotDiv, 
              datasets.cumulative_followers_with_self_retweets.data, 
-             datasets.cumulative_followers_with_self_retweets.layout, {displayModeBar: false});
+             datasets.cumulative_followers_with_self_retweets.layout, layoutExtras);
         }else{
           includeRetweets=false;
-          Plotly.react(plotDiv, fig.data, fig.layout, {displayModeBar: false});
+          Plotly.react(plotDiv, fig.data, fig.layout, layoutExtras);
         }
       });
     }else{
@@ -153,9 +161,10 @@ var PlotlyJSONHandler = function(tweets){
       if (includeRetweets){
           Plotly.react(plotDiv, 
                        datasets.cumulative_followers_with_self_retweets.data, 
-                       datasets.cumulative_followers_with_self_retweets.layout);
+                       datasets.cumulative_followers_with_self_retweets.layout,
+                      layoutExtras);
       }else{
-          Plotly.react(plotDiv, fig.data, fig.layout);
+          Plotly.react(plotDiv, fig.data, fig.layout,layoutExtras);
       }
     })
     
