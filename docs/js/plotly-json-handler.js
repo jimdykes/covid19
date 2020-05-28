@@ -13,7 +13,10 @@ function clickTweetInTable(tweetID){
 
 const urlParams = new URLSearchParams(window.location.search);
 
-const dataPath = urlParams.get('data') || '/' //'https://epic-covid19.storage.googleapis.com/diffusion-graphs/'
+const dataPath = urlParams.get('data') || ''
+
+// To pull from Google Bucket, use: 'https://epic-covid19.storage.googleapis.com/diffusion-graphs/'
+// Defaults to looking in the data folder.
 
 var STATE = {}
 
