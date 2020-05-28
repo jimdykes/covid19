@@ -1,11 +1,12 @@
 table: cdc_userstreams
-start: '2020-04-15 23:10:40 UTC' #beginning of cdc_userstreams collection
 
 TITLE:     Top 25 Retweets of Center for Disease Control
 
-SUBHEADER: Diffusion of the top 25 most retweeted @CDCGov, @CDCEmergency, @CDCEspañol, @CDCGlobal, @CDC_ehealth tweets since mid-April
+SUBHEADER: Diffusion of the top 10 most retweeted @CDCGov, @CDCEmergency, @CDCEspañol, @CDCGlobal, @CDC_ehealth tweets since mid-April
 
 JSON:      data/cdc.json
+
+topN:      25
 
 data       : /home/jupyter/data/diffusion/cdc_userstreams_top_25_retweeted
 

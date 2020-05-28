@@ -1,12 +1,12 @@
 table : 'us_governors'
-type  : 'retweet-simplified'
-start : '2020-04-22 19:57:07 UTC'
 
 TITLE:     Top 25 Retweets of US Governors
 
 SUBHEADER: "Diffusion of the top 25 most retweeted US Governors <a href='https://twitter.com/i/lists/88692902'>(Twitter list)</a>"
 
 JSON       : data/us-governors.json
+
+topN       : 25
 
 data       : /home/jupyter/data/diffusion/us_governors_top_25_retweeted
 
