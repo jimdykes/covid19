@@ -1,0 +1,14 @@
+table : 'donald_trump'
+
+
+TITLE      : Top 10 Retweets of @realdonaldtrump
+
+SUBHEADER  : Diffusion of the top 10 most retweeted tweets by Donald Trump since late April
+
+JSON       : data/trump.json
+
+topN       : 10
+
+data       : /home/jupyter/data/diffusion/trump_top_10_retweeted
+
+output     : docs/trump.html
