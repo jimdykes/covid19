@@ -60,7 +60,7 @@
                 <input id='selfRetweetSwitch' type='checkbox' />
                 <div class='switch mr6'></div> Include Self-Retweets
             </label>
-            <p class=txt-s>Each dot on these graphs indicates a retweet of a specific tweet (distinguished by colors). The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the audience exposed to the tweet). The Y-value of the dot is the <em>cumulative sum</em> of the number of followers for each retweeter. The Y-axis then represents the <strong>potential size of the audience that has been exposed to the tweet</strong>. Note these cumulative sums do may include duplicate followers.  Use the toggle above to include/exclude followers for self-retweets.</p>
+            <p class=txt-s>Each dot on these graphs indicates a retweet of a specific tweet (distinguished by colors). The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the audience exposed to the tweet). The Y-value of the dot is the <em>cumulative sum</em> of the number of followers for each retweeter. The Y-axis then represents the <strong>potential size of the audience that has been exposed to the tweet</strong>. Note these cumulative sums do may include duplicate followers.</p>
         </div>
 
         <p id='by-count-description' style="display:none;" class=txt-s>Each dot on these graphs indicates a retweet of a specific tweet (distinguished by colors). The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the audience exposed to the tweet). The Y-value of the dot reflects the total number of times the tweet was retweeted.</p>
@@ -98,6 +98,18 @@
         </table>
 
     </section>
+    
+    <footer class='my24 container align-center'>
+        <a href="https://twitter.com/epiccolorado"><img width="50" src="img/epic_logo_tiny.png"></a>
+        <p class="txt-s">&copy; 
+            <a target="_blank" class="link" href="https://cmci.colorado.edu/~palen/">Project EPIC</a>. University of Colorado Boulder. 
+            <a target="_blank" class="link" href="//twitter.com/jenningsatcu">@jenningatcu</a>, 
+            <a target="_blank" class="link" href="//twitter.com/melissajbica">@melissabica</a>, 
+            <a target="_blank" class="link" href="//twitter.com/palen">@palen</a>, 
+            <a target="_blank" class="link" href="https://behavioralscience.colorado.edu/person/james-dykes">Jim Dykes</a>,
+            <a target="_blank" class="link" href="https://www.linkedin.com/in/handebatan">Hande Batan</a>
+         </p>
+    </footer>
 
     <!-- Load the JSON plot handler last -->
     <script src="js/plotly-json-handler.js"></script>
