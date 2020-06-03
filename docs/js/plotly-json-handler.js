@@ -208,7 +208,7 @@ var PlotlyJSONHandler = function(tweets){
     })
     
     //Turn off loading ICON if we got all the way here
-    var container = document.getElementsByClassName('container').item(1);
+    var container = document.getElementsByClassName('container').item(2);
         container.className = 'container px12 py12'      
 
     var buttons = document.getElementsByClassName('tweetIDButton'); 

@@ -4,6 +4,8 @@ TITLE:     Top 25 Retweets about covid maps
 
 SUBHEADER: Diffusion of the top 25 most retweets with covid + map keywords
 
+EXTRA:     "These are the top 25 most retweeted tweets since March 30, 2020 with the following search terms: `covid maps`, `coronavirus maps`, or `sars maps`"
+
 JSON:      data/covid-maps.json
 
 topN       : 25
