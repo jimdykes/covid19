@@ -35,6 +35,22 @@
     <header class='px24 py12 my24 mx-auto container bg-blue-faint border border--light'>
         <h3 class='txt-h3 align-center'>Top 25 Retweets about covid &amp; charts</h3>
         <h5 class='txt-h5 align-center'>Diffusion of the top 25 most retweets with covid + charts/graphics keywords</h5>
+        
+        <div class="authors border-t border--gray-dark py6 mt3 align-center" >
+            
+            <p class='txt'>An interactive Twitter analysis tool by <a href="https://twitter.com/epiccolorado"><img width="30" src="img/epic_logo_tiny.png"></a> at the University of Colorado Boulder
+
+                <br>
+            
+                <a target="_blank" class="link" href="//twitter.com/jenningsatcu">@jenningatcu</a>, 
+                <a target="_blank" class="link" href="//twitter.com/melissajbica">@melissabica</a>, 
+                <a target="_blank" class="link" href="//twitter.com/palen">@palen</a>, 
+                <a target="_blank" class="link" href="https://behavioralscience.colorado.edu/person/james-dykes">Jim Dykes</a>,
+                <a target="_blank" class="link" href="https://www.linkedin.com/in/handebatan">Hande Batan</a>
+            </p>
+            
+        </div>
+
     </header>
 
     <section class='container px12 py12 loading'>      
@@ -78,9 +94,10 @@
             <div class='flex-child' id="currentTweet">
 
                 <table class='table txt-s'>
-                    <tr><th>Retweeter</th><th>Followers</th><th>Original tweet</th></tr>
+                    <tr><th>Retweeter</th><th>Time (UTC)</th><th>Followers</th><th>Original tweet</th></tr>
                     <tr>
                         <td class='w180'><span id='currentScreenName'></span></td>
+                        <td><span id='currentTweetTime'></span></td>
                         <td><span id='currentFollowerCount'></span></td>
                         <td style="height:60px !important;">
                           <span id='currentTweetText'></span>

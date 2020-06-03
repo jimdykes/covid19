@@ -21,9 +21,10 @@ const dataPath = urlParams.get('data') || ''
 var STATE = {}
 
 var layoutExtras = {
-    displayModeBar: false}
+    displayModeBar: false,
 //     displaylogo: false,
-//     modeBarButtonsToRemove: ['toImage','hoverClosestCartesian','hoverCompareCartesian','toggleSpikelines', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'resetScale2d']}
+    displaylogo: false,
+    modeBarButtonsToRemove: ['toImage','hoverClosestCartesian','hoverCompareCartesian','toggleSpikelines', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'resetScale2d']}
 
 var PlotlyJSONHandler = function(tweets){
 
@@ -36,6 +37,7 @@ var PlotlyJSONHandler = function(tweets){
         tr.innerHTML = '<td class="cursor-pointer tweetIDButton" data-id="'+t.id+'" data-rank="'+t.rank+
             '" style="background-color:'+t.color+';">'+t.rank+'</td>'+
             '<td><a class="link" target="_blank" href="//twitter.com/'+t.user+'">@'+t.user+'</a></td>'+
+            '<td>'+t.time.substring(0,19).split("T").join(" ")+'</td>'+
             '<td>'+t.text+
             ' <a target="_blank" class="link" href="//twitter.com/i/web/status/'+t.id+'">[View on Twitter]</a>'+'</td>';
     tweetTable.appendChild(tr);
@@ -45,12 +47,17 @@ var PlotlyJSONHandler = function(tweets){
   var currentScreenName    = document.getElementById('currentScreenName');
   var currentFollowerCount = document.getElementById('currentFollowerCount');
   var currentTweetText     = document.getElementById('currentTweetText');
+  var currentTweetTime     = document.getElementById('currentTweetTime');
 
     
   //First, load the data
   Plotly.d3.json(dataPath + plotDiv.dataset.json, function(err, fig) {
 
   // Plotly.d3.json('http://epic.tweetsonamap.com/covid19-static-pages/docs/' + plotDiv.dataset.json, function(err, fig) {
+      
+    fig.layout.hoverdistance = 25;
+//     fig.layout.legend.orientation = 'h'
+//     fig.layout.modebar.orientation = 'v'
 
     // Create cumulative follower plot with defaults
     Plotly.react(plotDiv, fig.data, fig.layout, layoutExtras);
@@ -108,13 +115,41 @@ var PlotlyJSONHandler = function(tweets){
     plotDiv.on('plotly_hover', function(data){
 
       const thisIndex  = data.points[0].pointIndex;
+      const curveNumber = data.points[0].curveNumber;
       const seriesName = data.points[0].data.name
     
       currentScreenName.innerHTML = '<a href="https://twitter.com/'+data.points[0].data.meta.u[thisIndex] +
       '" target="_blank" class="username link">'+data.points[0].data.meta.u[thisIndex] + "</a>"
+      
+      currentTweetTime.innerHTML = data.points[0].x;
+        
       currentFollowerCount.innerHTML = numberWithCommas(data.points[0].data.meta.f[thisIndex])
       currentTweetText.innerHTML = '<a href="https://twitter.com/i/web/status/'+fig.tweets[seriesName].id +
-      '" target="_blank" class="username link">'+fig.tweets[seriesName].user + "</a> | " + fig.tweets[seriesName].text
+      '" target="_blank" class="username link">'+fig.tweets[seriesName].user + "</a> | " + 
+      data.points[0].data.x[0].substring(0,19).split("T").join(" ") + " <br> " +fig.tweets[seriesName].text
+        
+//       var markerStyle = data.points[0].data.marker;
+//       var color = markerStyle.color;
+
+//       var newColors = []
+//       for (var i=0;i< markerStyle.size.length; i++){
+//         newColors.push( color ) ;
+//       }
+
+//       newColors[thisIndex] = 'yellow'
+//       markerStyle.color = newColors
+        
+// //       console.log(markerStyle)
+      
+// //       markers[thisIndex] = {
+// //           'marker':{
+// //               'line':{
+// //                'color':'yellow',
+// //                'width':1
+// //               }
+// //           }}
+      
+//       Plotly.restyle(plotDiv, {'marker':markerStyle}, [curveNumber]);
       
     })
 
