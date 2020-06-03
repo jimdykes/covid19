@@ -45,7 +45,7 @@
 
   <section class='container px12 py12 border border--light'>
 
-  	<div class='prose align-left'>
+  <div class='prose align-left'>
 		<h4 class='txt-h4'>Retweet Diffusion Graphs</h4>
         <p class='txt-m'>Each dot on these graphs indicates a retweet of a specific tweet (distinguished by colors). The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the audience exposed to the retweet). The vertical location of the dot is the cumulative sum of the number of followers for each retweeter. The Y-axis then represents the potential size of the audience that has been exposed to that tweet. Read the example at the bottom of this page for more information.</p>
 	</div>
@@ -88,7 +88,7 @@
 				</a>
 			</li>
             
-      <li class='inline-block mx24 my24'>
+      <!-- <li class='inline-block mx24 my24'>
 				<a class='link' target="_blank" href="public-health-partners.html">
 					<img width="400" src="img/public-health-partners-thumbnail.jpg" />
 					<p class='txt-l'>Public Health Partners (List from Twitter)</p>
@@ -100,7 +100,7 @@
 					<img width="400" src="img/public-health-agencies-thumbnail.jpg" />
 					<p class='txt-l'>Public Health Agencies (List from Twitter)</p>
 				</a>
-			</li>
+			</li> -->
 
       <li class='inline-block mx24 my24'>
         <a class='link' target="_blank" href="covid-maps.html">
@@ -121,13 +121,16 @@
           <img width="400" src="img/covid-charts-thumbnail.jpg" />
           <p class='txt-l'>Covid + Charts</p>
         </a>
-      </li>
-
-
-
-            
+      </li>            
 		</ul>
+
+    <div class='prose align-left'>
+    <h6 class='txt-h6'>How are these tweets collected?</h6>
+        <p class='txt-s'>For individual accounts such as @WHO, @CDCGov, or all of the US Governors, we use the <code>follow</code> request parameter of the <a target="_blank" href="https://developer.twitter.com/en/docs/tweets/filter-realtime/guides/basic-stream-parameters">realtime filter Twitter API</a>. This returns all of the tweets posted by a specific user as well as all retweets of and replies to that user. For keyword collections (such as "coronavirus maps", we use the <code>track</code> API request parameter for a standard keyword search.</p>
+  </div>
+
         <hr class='txt-hr'>
+
         <div class='prose align-center'>
             <p class='txt align-left'>Example</p>
             <div class='w600 inline-block'>
