@@ -28,10 +28,10 @@
         
                 <div class="authors border-t border--gray-dark py6 mt3 align-center" >
             
-            <p class='txt'>Interactive Twitter analysis by <a href="https://twitter.com/epiccolorado"><img width="30" src="img/epic_logo_tiny.png"></a> at the University of Colorado Boulder
+            <p class='txt'>Interactive analysis of tweet diffusion from the University of Colorado Boulder
 
                 <br>
-            
+                <a href="https://twitter.com/epiccolorado"><img width="25" src="img/epic_logo_tiny.png"></a> 
                 <a target="_blank" class="link" href="//twitter.com/jenningsatcu">@jenningatcu</a>, 
                 <a target="_blank" class="link" href="//twitter.com/melissajbica">@melissabica</a>, 
                 <a target="_blank" class="link" href="//twitter.com/palen">@palen</a>, 
@@ -47,11 +47,11 @@
 
   <div class='prose align-left'>
 		<h4 class='txt-h4'>Retweet Diffusion Graphs</h4>
-        <p class='txt-m'>Each dot on these graphs indicates a retweet of a specific tweet (distinguished by colors). The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the audience exposed to the retweet). The vertical location of the dot is the cumulative sum of the number of followers for each retweeter. The Y-axis then represents the potential size of the audience that has been exposed to that tweet. Read the example at the bottom of this page for more information.</p>
+        <p class='txt-m'>Each dot on these graphs indicates a retweet (not quote tweets nor replies) of a specific tweet. The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the potential audience exposed to the retweet). The vertical location of the dot is the cumulative sum of the number of followers for each retweeter. The Y-axis then represents the potential size of the audience that has been exposed to that tweet. Read the example at the bottom of this page for more information.</p>
 	</div>
 
 	<div class='my12' id='visualizaitons'>
-        <p class='txt-em'>Click on a graph for the interactive versions:</p>
+        <p class='txt-em'>Click on a graph to see  the interactive versions</p>
 		<ul class='align-center'>
 			<li class='inline-block mx24 my24'>
 				<a class='link' target="_blank" href="who.html">
@@ -127,12 +127,11 @@
     <div class='prose align-left'>
     <h6 class='txt-h6'>How are these tweets collected?</h6>
         <p class='txt-s'>For individual accounts such as @WHO, @CDCGov, or all of the US Governors, we use the <code>follow</code> request parameter of the <a target="_blank" href="https://developer.twitter.com/en/docs/tweets/filter-realtime/guides/basic-stream-parameters">realtime filter Twitter API</a>. This returns all of the tweets posted by a specific user as well as all retweets of and replies to that user. For keyword collections (such as "coronavirus maps", we use the <code>track</code> API request parameter for a standard keyword search.</p>
-  </div>
-
-        <hr class='txt-hr'>
-
-        <div class='prose align-center'>
-            <p class='txt align-left'>Example</p>
+    </div>
+    <hr class='txt-hr'>
+    <div class='prose'>
+        <h6 class='txt-h6'>Example</h6>
+        <div class='align-center'>
             <div class='w600 inline-block'>
                 <table class='txt-s'>
                     <tr><th>Day</th><th>Action</th><th>Y-Value</th><th>Dot Size</th>
@@ -167,6 +166,7 @@
             </div>
             <img class='inline-block' width="400" src="img/example.png" />
         </div>
+      </div>
 	</div>
 
   </section>
