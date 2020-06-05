@@ -22,22 +22,20 @@
 
 <body>
 
-	<header class='px24 py12 my24 mx-auto container bg-blue-faint border border--light'>
+	<header class='prose px24 py12 my24 mx-auto container bg-blue-faint border border--light'>
     
-		<h1 class='txt-h1 align-center'>Visualizing COVID19 On Twitter</h1>
+		<h2 class='txt-h2 align-center'>Visualizing the diffusion of COVID19 Tweets</h2>
         
                 <div class="authors border-t border--gray-dark py6 mt3 align-center" >
             
-            <p class='txt'>Interactive analysis of tweet diffusion from the University of Colorado Boulder
-
-                <br>
-                <a href="https://twitter.com/epiccolorado"><img width="25" src="img/epic_logo_tiny.png"></a> 
+            <p class='txt'>Interactive analysis of tweet diffusion from the University of Colorado Boulder<br>
                 <a target="_blank" class="link" href="//twitter.com/jenningsatcu">@jenningatcu</a>, 
                 <a target="_blank" class="link" href="//twitter.com/melissajbica">@melissabica</a>, 
                 <a target="_blank" class="link" href="//twitter.com/palen">@palen</a>, 
                 <a target="_blank" class="link" href="https://behavioralscience.colorado.edu/person/james-dykes">Jim Dykes</a>,
                 <a target="_blank" class="link" href="https://www.linkedin.com/in/handebatan">Hande Batan</a>
             </p>
+            <a href="https://twitter.com/epiccolorado"><img width="50" class='py6' src="img/epic_logo_tiny.png"></a> 
             
         </div>
 
@@ -46,31 +44,31 @@
   <section class='container px12 py12 border border--light'>
 
   <div class='prose align-left'>
-		<h4 class='txt-h4'>Retweet Diffusion Graphs</h4>
-        <p class='txt-m'>Each dot on these graphs indicates a retweet (not quote tweets nor replies) of a specific tweet. The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the potential audience exposed to the retweet). The vertical location of the dot is the cumulative sum of the number of followers for each retweeter. The Y-axis then represents the potential size of the audience that has been exposed to that tweet. Read the example at the bottom of this page for more information.</p>
+		<h5 class='txt-h5'>Retweet Diffusion Graphs</h5>
+        <p class='txt-s'>Each circle on these graphs indicates a retweet (not quote tweets nor replies) of a specific tweet. The size of the dot is proportional to the number of followers that the retweeter has (a proxy for the size of the potential audience exposed to the retweet). The vertical location of the dot is the cumulative sum of the number of followers for each retweeter. The Y-axis then represents the potential size of the audience that has been exposed to that tweet over time. These graphs show the most retweetd tweets for each collection, typically the top 25. See the example at the bottom of this page for more information.</p>
 	</div>
 
 	<div class='my12' id='visualizaitons'>
-        <p class='txt-em'>Click on a graph to see  the interactive versions</p>
+        <p class='txt-s txt-em'>Click on a graph to see  the interactive version:</p>
 		<ul class='align-center'>
 			<li class='inline-block mx24 my24'>
 				<a class='link' target="_blank" href="who.html">
 					<img width="400" src="img/who-thumbnail.jpg" />
-					<p class='txt-l'>World Health Organization (Top 25)</p>
+                    <p class='txt'>World Health Organization (<code>@who</code>)</p>
 				</a>
 			</li>
 
 			<li class='inline-block mx24 my24'>
 				<a class='link' target="_blank" href="cdc.html">
 					<img width="400" src="img/cdc-thumbnail.jpg" />
-					<p class='txt-l'>Center for Disease Control (Top 25)</p>
+                    <p class='txt'>Center for Disease Control</p>
 				</a>
 			</li>
             
       <li class='inline-block mx24 my24'>
 				<a class='link' target="_blank" href="cdc-keyword.html">
 					<img width="400" src="img/cdc-keyword-thumbnail.jpg" />
-					<p class='txt-l'>Top 25 Retweeted with keyword '@CDCGov'</p>
+                    <p class='txt'>Keywords: <code>@cdcgov</code> or <code>@cdcemergency</code></p>
 				</a>
 			</li>
             
@@ -84,7 +82,7 @@
       <li class='inline-block mx24 my24'>
 				<a class='link' target="_blank" href="us-governors.html">
 					<img width="400" src="img/us-governors-thumbnail.jpg" />
-					<p class='txt-l'>US Governors</p>
+					<p class='txt'>Top Retweeted US Governors</p>
 				</a>
 			</li>
             
@@ -105,29 +103,36 @@
       <li class='inline-block mx24 my24'>
         <a class='link' target="_blank" href="covid-maps.html">
           <img width="400" src="img/covid-maps-thumbnail.jpg" />
-          <p class='txt-l'>Covid + Maps</p>
+          <p class='txt'>Covid + Map</p>
         </a>
       </li>
             
       <li class='inline-block mx24 my24'>
         <a class='link' target="_blank" href="covid-data.html">
           <img width="400" src="img/covid-data-thumbnail.jpg" />
-          <p class='txt-l'>Covid + Data</p>
+          <p class='txt'>Covid + Data</p>
         </a>
       </li>
 
       <li class='inline-block mx24 my24'>
         <a class='link' target="_blank" href="covid-charts.html">
           <img width="400" src="img/covid-charts-thumbnail.jpg" />
-          <p class='txt-l'>Covid + Charts</p>
+          <p class='txt-l'>Covid + Chart/Graphic/Datavis</p>
         </a>
       </li>            
-		</ul>
+    </ul>
 
     <div class='prose align-left'>
     <h6 class='txt-h6'>How are these tweets collected?</h6>
         <p class='txt-s'>For individual accounts such as @WHO, @CDCGov, or all of the US Governors, we use the <code>follow</code> request parameter of the <a target="_blank" href="https://developer.twitter.com/en/docs/tweets/filter-realtime/guides/basic-stream-parameters">realtime filter Twitter API</a>. This returns all of the tweets posted by a specific user as well as all retweets of and replies to that user. For keyword collections (such as "coronavirus maps", we use the <code>track</code> API request parameter for a standard keyword search.</p>
+        
+    <h6 class='txt-h6'>Methodology</h6>
+        <p class='txt-s'>This work extends the the methodology by Bica et al. to measure and show the differences in diffusion of risk imagery on Twitter during Hurricanes: <em>Melissa Bica, Julie L. Demuth, James E. Dykes, and Leysia Palen. (2019). <a target="_blank" href="https://dl.acm.org/doi/10.1145/3290605.3300545">Communicating Hurricane Risks: Multi-Method Examination of Risk Imagery Diffusion</a>. In Proceedings of the CHI Conference on Human Factors in Computing Systems (CHI '19, Glasgow, UK).</em></p>
     </div>
+        
+        
+        
+        
     <hr class='txt-hr'>
     <div class='prose'>
         <h6 class='txt-h6'>Example</h6>

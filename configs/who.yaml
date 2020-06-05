@@ -1,7 +1,7 @@
 table: world_health_organization
 
 TITLE:     Top 25 Retweets of @WHO
-SUBHEADER: Diffusion of the top 25 most retweeted tweets from the World Health Organization since mid-April
+SUBHEADER: Diffusion of the top 25 most retweeted tweets from the World Health Organization since April 15, 2020
 JSON:      data/who.json
 
 topN       : 25
