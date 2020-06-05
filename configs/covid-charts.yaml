@@ -6,6 +6,19 @@ SUBHEADER: Diffusion of the top 25 most retweets with covid + charts/graphics ke
 
 JSON:      data/covid-charts.json
 
+EXTRA:     >
+  "These are the top 25 most retweeted tweets since March 25, 2020 with the following search terms: 
+  <code>covid datavis</code>,
+  <code>corona datavis</code>,
+  <code>sars chart</code>,
+  <code>coronavirus graphic</code>,
+  <code>covid graphic</code>,
+  <code>covid chart</code>,
+  <code>coronavirus chart</code>,
+  <code>sars graphic</code>,
+  <code>sars datavis</code>
+
+
 topN:      25
 
 data       : /home/jupyter/data/diffusion/covid-charts_top_25_retweeted
