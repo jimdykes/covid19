@@ -1,0 +1,16 @@
+table:     cdc_userstreams
+
+TITLE:     Center for Disease Control Retweets including Trump
+
+SUBHEADER: Diffusion of the top 10 most retweeted @CDCGov, @CDCEmergency, @CDCEspañol, @CDCGlobal, @CDC_ehealth tweets since mid-April that Trump also retweeted
+
+JSON:      data/cdc-trump.json
+
+EXTRA:     >
+  Trump retweeted 15 tweets from the CDC since April. You can compare the signatures here to the <a class="link" href="//epic.cs.colorado.edu/covid19/cdc.html" target="_blank">top 25 most retweeted tweets by the CDC</a> to see which tweets he did not retweet.  The tweets here are labeled by the time that <span class='username'>realDonaldTrump</span> retweeted (in EST).
+
+topN       : 25
+
+data       : /home/jupyter/data/diffusion/cdc_userstreams_with_trump
+
+output     : docs/cdc-trump.html

@@ -34,7 +34,7 @@ var PlotlyJSONHandler = function(tweets){
     var tweetTable = document.getElementById('tweet-table-body');
     _.sortBy(Object.values(tweets),function(x){return x.rank}).forEach(function(t){
         var tr = document.createElement('tr');
-        tr.innerHTML = '<td class="cursor-pointer tweetIDButton" data-id="'+t.id+'" data-rank="'+t.rank+
+        tr.innerHTML = '<td class="cursor-pointer tweetIDButton" data-topN="'+t.topN+'" data-id="'+t.id+'" data-rank="'+t.rank+ 
             '" style="background-color:'+t.color+';">'+t.rank+'</td>'+
             '<td><a class="link" target="_blank" href="//twitter.com/'+t.user+'">@'+t.user+'</a></td>'+
             '<td>'+t.time.substring(0,19).split("T").join(" ")+'</td>'+
@@ -214,9 +214,18 @@ var PlotlyJSONHandler = function(tweets){
     var buttons = document.getElementsByClassName('tweetIDButton'); 
     
     for (let button of buttons) {
+      
       button.addEventListener('click',function(e){
         const tID = this.dataset.id;
-        const tRank = Number(this.dataset.rank)-1;
+          
+        var tRank = Number(this.dataset.rank)-1;
+          
+        // If tRank fails because it's not a number (was a date...)
+        if (!tRank){
+          var keys = Object.keys(fig.tweets); 
+          keys.sort(); 
+          tRank = keys.indexOf(this.dataset.rank);
+        }
         console.log(tID, tRank)
         console.log(STATE)
 
